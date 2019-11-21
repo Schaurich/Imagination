@@ -36,7 +36,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public PutObjectResult uploadObject(MultipartFile file) throws IOException {
-        awsService.putObject(bucketName, "julia.jpg", convert(file));
+        awsService.putObject(bucketName, file.getOriginalFilename(), convert(file));
         return null;
     }
 
