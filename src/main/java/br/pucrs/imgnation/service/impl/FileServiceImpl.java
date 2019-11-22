@@ -25,7 +25,7 @@ public class FileServiceImpl implements FileService {
 
     private static final AWSCredentials credentials;
 
-    private static String bucketName = "bdimgination";
+    private static String bucketName = "dbimgnation";
 
     @Autowired
     AWSS3Service awsService;
@@ -72,8 +72,8 @@ public class FileServiceImpl implements FileService {
     static {
         //put your accesskey and secretkey here
         credentials = new BasicAWSCredentials(
-                "AKIAQCQIC6L5WGKHP5F6",
-                "Gp9x+tDQymTKmrrJWOiZQW7BvHvko60TpOwOT+hA"
+                "AKIAJZ4YBGW4237CGIOA",
+                "+Gs/EpB0X18rhxziMb6h8FS9nJyxemj+FHl+sWdd"
         );
     }
 
@@ -82,7 +82,7 @@ public class FileServiceImpl implements FileService {
         AmazonS3 s3client = AmazonS3ClientBuilder
                 .standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
-                .withRegion(Regions.US_EAST_2)
+                .withRegion(Regions.SA_EAST_1)
                 .build();
 
         AWSS3Service awsService = new AWSS3ServiceImpl(s3client);
