@@ -82,7 +82,7 @@ public class FileServiceImpl implements FileService {
         AmazonS3 s3client = AmazonS3ClientBuilder
                 .standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
-                .withRegion(Regions.SA_EAST_1)
+                .withRegion(Regions.US_EAST_2)
                 .build();
 
         AWSS3Service awsService = new AWSS3ServiceImpl(s3client);

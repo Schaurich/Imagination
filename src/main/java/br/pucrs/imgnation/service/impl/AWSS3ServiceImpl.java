@@ -3,13 +3,7 @@ package br.pucrs.imgnation.service.impl;
 import br.pucrs.imgnation.service.AWSS3Service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.Bucket;
-import com.amazonaws.services.s3.model.CopyObjectResult;
-import com.amazonaws.services.s3.model.DeleteObjectsRequest;
-import com.amazonaws.services.s3.model.DeleteObjectsResult;
-import com.amazonaws.services.s3.model.ObjectListing;
-import com.amazonaws.services.s3.model.PutObjectResult;
-import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.*;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -51,7 +45,11 @@ public class AWSS3ServiceImpl implements AWSS3Service {
 
     //uploading object
     public PutObjectResult putObject(String bucketName, String key, File file) {
-        return s3client.putObject(bucketName, key, file);
+        // Upload a file as a new object with ContentType and title specified.
+        return s3client.putObject(
+                new PutObjectRequest(bucketName, key, file)
+                .withCannedAcl(CannedAccessControlList.PublicRead)
+        );
     }
 
     //listing objects
