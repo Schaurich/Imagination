@@ -85,6 +85,6 @@ public class FileServiceImpl implements FileService {
                 .withRegion(Regions.US_EAST_2)
                 .build();
 
-        AWSS3Service awsService = new AWSS3ServiceImpl(s3client);
+        this.awsService = new AWSS3ServiceImpl(s3client);
     }
 }

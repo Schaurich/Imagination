@@ -35,13 +35,21 @@ public class PrincipalController {
         return "principal"; //view
     }
 
+    @GetMapping("/album")
+    public String album(Model model) {
+        return "album"; //view
+    }
+
     @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes, Model model) throws IOException {
+    public String uploadFile(@RequestParam("file") MultipartFile file, Model model) throws IOException {
         Map<String, Object> mapModel = new HashMap<>();
+        if (!file.isEmpty()) {
+            fileService.uploadObject(file);
+            mapModel.put("msgSucess", "Arquivo enviado com sucesso!");
+        } else {
+            mapModel.put("msgAlert", "Favor, escolha um arquivo para upload!");
+        }
         mapModel.put("paginaRetorno", "principal");
-
-        fileService.uploadObject(file);
-
         model.addAllAttributes(mapModel);
         return (String)mapModel.get("paginaRetorno");
     }
@@ -49,13 +57,12 @@ public class PrincipalController {
     @GetMapping("/l")
     public String teste(Model model) {
         Map<String, Object> mapModel = new HashMap<>();
-        mapModel.put("paginaRetorno", "principal");
-
-//        fileService.uploadObject(new File(""));
+        mapModel.put("paginaRetorno", "album");
 
         ObjectListing objectListing = fileService.listObjects();
         for(S3ObjectSummary os : objectListing.getObjectSummaries()) {
             System.out.println(os.getKey());
+            mapModel.put("files", "https://dbimgnation.s3-sa-east-1.amazonaws.com/" + os.getKey());
         }
 
         model.addAllAttributes(mapModel);
