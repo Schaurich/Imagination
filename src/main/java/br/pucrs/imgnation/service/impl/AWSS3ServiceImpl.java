@@ -48,8 +48,7 @@ public class AWSS3ServiceImpl implements AWSS3Service {
         // Upload a file as a new object with ContentType and title specified.
         return s3client.putObject(
                 new PutObjectRequest(bucketName, key, file)
-                .withCannedAcl(CannedAccessControlList.PublicRead)
-        );
+                        .withCannedAcl(CannedAccessControlList.PublicRead));
     }
 
     //listing objects
