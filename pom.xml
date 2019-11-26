@@ -10,6 +10,7 @@
     </parent>
     <groupId>br.pucrs</groupId>
     <artifactId>imgnation</artifactId>
+    <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <name>imgnation</name>
     <description>Projeto InfraTI</description>
@@ -86,6 +87,7 @@
     </dependencyManagement>
 
     <build>
+        <finalName>imgnation</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
