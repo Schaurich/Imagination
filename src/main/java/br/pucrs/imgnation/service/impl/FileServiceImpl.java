@@ -15,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -35,8 +38,8 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public PutObjectResult uploadObject(MultipartFile file) throws IOException {
-        awsService.putObject(bucketName, file.getOriginalFilename(), convert(file));
+    public PutObjectResult uploadObject(MultipartFile file) throws Exception {
+        awsService.putObject(bucketName, file.getOriginalFilename(), createThumbnail(convert(file)));
         return null;
     }
 
@@ -86,5 +89,19 @@ public class FileServiceImpl implements FileService {
                 .build();
 
         this.awsService = new AWSS3ServiceImpl(s3client);
+    }
+
+    private File createThumbnail(File file) throws Exception {
+        File fileOut;
+        BufferedImage img = ImageIO.read(file);
+        BufferedImage thumb = new BufferedImage(100, 200,
+                BufferedImage.TYPE_INT_RGB);
+
+        Graphics2D g2d = (Graphics2D) thumb.getGraphics();
+        g2d.drawImage(img, 0, 0, thumb.getWidth() - 1, thumb.getHeight() - 1, 0, 0,
+                img.getWidth() - 1, img.getHeight() - 1, null);
+        g2d.dispose();
+        ImageIO.write(thumb, "PNG", fileOut = new File("Thumb_"+file.getName()));
+        return fileOut;
     }
 }

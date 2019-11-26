@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface FileService {
 
-    PutObjectResult uploadObject(MultipartFile file) throws IOException;
+    PutObjectResult uploadObject(MultipartFile file) throws Exception;
 
     ObjectListing listObjects();
 
